@@ -68,6 +68,10 @@ func NewFileSystem(conf Configuration) (*FileSystem, error) {
 	return fs, nil
 }
 
+func (fs *FileSystem) SetTransportProxy(proxy func(*http.Request) (*url.URL, error)) {
+	fs.transport.Proxy = proxy
+}
+
 // Builds the canonical URL used for remote request
 func buildRequestUrl(conf Configuration, p *Path, params *map[string]string) (*url.URL, error) {
 	u, err := conf.GetNameNodeUrl()

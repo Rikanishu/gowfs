@@ -9,7 +9,10 @@ import "encoding/json"
 import "net"
 import "net/http"
 import "net/url"
-import "io/ioutil"
+import (
+	"io/ioutil"
+	"fmt"
+)
 
 const (
 	OP_OPEN                  = "OPEN"
@@ -109,6 +112,7 @@ func makeHdfsData(data []byte) (HdfsJsonData, error) {
 	jsonErr := json.Unmarshal(data, &jsonData)
 
 	if jsonErr != nil {
+		fmt.Println("DEBUG:data:", string(data[:100]))
 		return HdfsJsonData{}, jsonErr
 	}
 

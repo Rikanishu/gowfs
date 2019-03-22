@@ -112,7 +112,7 @@ func makeHdfsData(data []byte) (HdfsJsonData, error) {
 	jsonErr := json.Unmarshal(data, &jsonData)
 
 	if jsonErr != nil {
-		fmt.Println("DEBUG:data:", string(data[:100]))
+		fmt.Println("DEBUG:data:", string(data))
 		return HdfsJsonData{}, jsonErr
 	}
 

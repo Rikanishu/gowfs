@@ -1,12 +1,14 @@
 package gowfs
 
-import "fmt"
-import "os"
-import "io"
-import "strconv"
-import "strings"
-import "net/url"
-import "net/http"
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"net/url"
+	"os"
+	"strconv"
+	"strings"
+)
 
 // Creates a new file and stores its content in HDFS.
 // See HDFS FileSystem.create()
@@ -75,8 +77,7 @@ func (fs *FileSystem) Create(
 	}
 	rsp, err = fs.client.Do(req)
 	if err != nil {
-		fmt.Errorf("FileSystem.Create(%s) - bad url: %s", loc, err.Error())
-		return false, err
+		return false, fmt.Errorf("FileSystem.Create(%s) - bad url: %s", loc, err.Error())
 	}
 
 	if rsp.StatusCode != http.StatusCreated {

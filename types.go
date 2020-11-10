@@ -1,7 +1,9 @@
 package gowfs
 
-import "fmt"
-import "net/url"
+import (
+	"fmt"
+	"net/url"
+)
 
 // Root level struct for data JSON data from WebHDFS.
 type HdfsJsonData struct {

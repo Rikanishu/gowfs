@@ -5,11 +5,13 @@ See https://github.com/vladimirvivien/gowfs.
 */
 package gowfs
 
-import "encoding/json"
-import "net"
-import "net/http"
-import "net/url"
-import "io/ioutil"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"net"
+	"net/http"
+	"net/url"
+)
 
 const (
 	OP_OPEN                  = "OPEN"

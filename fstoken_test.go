@@ -1,13 +1,15 @@
 package gowfs
 
-import "fmt"
-import "log"
-import "net/url"
-import "net/http"
-import "net/http/httptest"
-import _ "strconv"
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
 
-import "testing"
+	_ "strconv"
+	"testing"
+)
 
 func Test_GetDelegationToken(t *testing.T) {
 	server := mockServerFor_GetDelegationToken()

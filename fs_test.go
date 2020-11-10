@@ -1,8 +1,10 @@
 package gowfs
 
-import "net/url"
-import "testing"
-import "os/user"
+import (
+	"net/url"
+	"os/user"
+	"testing"
+)
 
 func Test_NewFileSystem(t *testing.T) {
 	conf := Configuration{Addr: "localhost:8080"}

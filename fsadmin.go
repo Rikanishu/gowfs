@@ -1,9 +1,11 @@
 package gowfs
 
-import "fmt"
-import "os"
-import "net/http"
-import "strconv"
+import (
+	"fmt"
+	"net/http"
+	"os"
+	"strconv"
+)
 
 // Renames the specified path resource to a new name.
 // See HDFS FileSystem.rename()
@@ -210,12 +212,10 @@ func (fs *FileSystem) CreateSymlink(dest Path, link Path, createParent bool) (bo
 
 	req, _ := http.NewRequest("PUT", u.String(), nil)
 	rsp, err := fs.client.Do(req)
-
-	defer rsp.Body.Close()
-
 	if err != nil {
 		return false, err
 	}
+	defer rsp.Body.Close()
 
 	return true, nil
 }

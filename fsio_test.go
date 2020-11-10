@@ -1,15 +1,16 @@
 package gowfs
 
-import "testing"
-
-import "net/url"
-import "fmt"
-import "log"
-import "bytes"
-import "io/ioutil"
-import "net/http"
-import "strings"
-import "net/http/httptest"
+import (
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"strings"
+	"testing"
+)
 
 func Test_Create(t *testing.T) {
 	// start a new server to handle redirect

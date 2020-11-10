@@ -18,8 +18,8 @@ func Test_GetNameNodeUrl(t *testing.T) {
 		t.Errorf("Expecting url.Host locahost:8080, but got %s", u.Host)
 	}
 
-	if u.Path != WebHdfsVer+conf.BasePath {
-		t.Errorf("Expecting url.Path %s, but got %s", WebHdfsVer+conf.BasePath, u.Path)
+	if u.Path != WebHdfsVerDefault+conf.BasePath {
+		t.Errorf("Expecting url.Path %s, but got %s", WebHdfsVerDefault+conf.BasePath, u.Path)
 	}
 
 	if u.Query().Get("user.name") != conf.User {

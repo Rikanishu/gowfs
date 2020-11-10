@@ -1,7 +1,9 @@
 package gowfs
 
-import "fmt"
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 func (fs *FileSystem) GetDelegationToken(renewer string) (Token, error) {
 	params := map[string]string{"op": OP_GETDELEGATIONTOKEN, "renewer": renewer}

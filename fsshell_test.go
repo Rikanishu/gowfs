@@ -1,15 +1,16 @@
 package gowfs
 
-import "bytes"
-import "os"
-import "testing"
-import "net/url"
-import "net/http"
-import "net/http/httptest"
-import "fmt"
-import "log"
-
-import "strings"
+import (
+	"bytes"
+	"fmt"
+	"log"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"os"
+	"strings"
+	"testing"
+)
 
 func Test_AppendToFile(t *testing.T) {
 	// setup test file

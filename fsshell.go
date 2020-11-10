@@ -1,11 +1,13 @@
 package gowfs
 
-import "os"
-import "bytes"
-import "fmt"
-import "io"
-import "path"
-import "io/ioutil"
+import (
+	"bytes"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"os"
+	"path"
+)
 
 const MAX_UP_CHUNK int64 = 1 * (1024 * 1024) * 1024 // 1 GB.
 const MAX_DOWN_CHUNK int64 = 500 * (1024 * 1024)    // 500 MB

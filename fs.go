@@ -6,7 +6,9 @@ See https://github.com/vladimirvivien/gowfs.
 package gowfs
 
 import (
+	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -36,6 +38,8 @@ const (
 	OP_CANCELDELEGATIONTOKEN = "CANCELDELEGATIONTOKEN"
 )
 
+var errBadStatusCode = errors.New("bad status code")
+
 // Hack for in-lining multi-value functions
 func µ(v ...interface{}) []interface{} {
 	return v
@@ -63,6 +67,8 @@ func NewFileSystem(conf Configuration) (*FileSystem, error) {
 		},
 		MaxIdleConnsPerHost:   conf.MaxIdleConnsPerHost,
 		ResponseHeaderTimeout: conf.ResponseHeaderTimeout,
+		//nolint: gosec
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: conf.TLSClientSkipSecurity},
 	}
 	fs.client = http.Client{
 		Transport: fs.transport,
@@ -135,6 +141,9 @@ func requestHdfsData(client http.Client, req http.Request) (HdfsJsonData, error)
 	rsp, err := client.Do(&req)
 	if err != nil {
 		return HdfsJsonData{}, err
+	}
+	if rsp.StatusCode != http.StatusOK {
+		return HdfsJsonData{}, errBadStatusCode
 	}
 	defer rsp.Body.Close()
 	hdfsData, err := responseToHdfsData(rsp)

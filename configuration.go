@@ -15,12 +15,16 @@ type Configuration struct {
 	Addr                  string // host:port
 	BasePath              string // initial base path to be appended
 	User                  string // user.name to use to connect
+	Password              string
 	VersionPath           string // `/webhdfs/v1` according the protocol. If it's empty a default one will be used
 	ConnectionTimeout     time.Duration
 	DisableKeepAlives     bool
 	DisableCompression    bool
 	ResponseHeaderTimeout time.Duration
 	MaxIdleConnsPerHost   int
+	UseBaseAuth           bool
+	UseHTTPS              bool
+	TLSClientSkipSecurity bool
 }
 
 func NewConfiguration() *Configuration {
@@ -41,8 +45,12 @@ func (conf *Configuration) GetNameNodeUrl() (*url.URL, error) {
 	if conf.VersionPath != "" {
 		versionPath = "/" + strings.Trim(conf.VersionPath, "/")
 	}
+	var protocol = "http"
+	if conf.UseHTTPS {
+		protocol = "https"
+	}
 
-	var urlStr string = fmt.Sprintf("http://%s%s%s", conf.Addr, versionPath, conf.BasePath)
+	var urlStr string = fmt.Sprintf("%s://%s%s%s", protocol, conf.Addr, versionPath, conf.BasePath)
 
 	if &conf.User == nil || len(conf.User) == 0 {
 		u, _ := user.Current()

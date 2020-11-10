@@ -8,7 +8,7 @@ package gowfs
 import (
 	"crypto/tls"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -37,8 +37,6 @@ const (
 	OP_RENEWDELEGATIONTOKEN  = "RENEWDELEGATIONTOKEN"
 	OP_CANCELDELEGATIONTOKEN = "CANCELDELEGATIONTOKEN"
 )
-
-var errBadStatusCode = errors.New("bad status code")
 
 // Hack for in-lining multi-value functions
 func µ(v ...interface{}) []interface{} {
@@ -143,7 +141,7 @@ func requestHdfsData(client http.Client, req http.Request) (HdfsJsonData, error)
 		return HdfsJsonData{}, err
 	}
 	if rsp.StatusCode != http.StatusOK {
-		return HdfsJsonData{}, errBadStatusCode
+		return HdfsJsonData{}, fmt.Errorf("bad status code: %d", rsp.StatusCode)
 	}
 	defer rsp.Body.Close()
 	hdfsData, err := responseToHdfsData(rsp)

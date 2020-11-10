@@ -16,7 +16,7 @@ endif
 
 .PHONY: .lint
 .lint: install-lint
-	$(info "Running lint...")
+	$(info #Running lint...)
 	$(GOLANGCI_BIN) run --new-from-rev=origin/master --config=.golangci.pipeline.yaml ./...
 
 .PHONY: lint
@@ -31,10 +31,10 @@ lint-full: .lint-full
 
 .PHONY: test
 test:
-	$(info "Running tests...")
+	$(info #Running tests...)
 	go test ./...
 
 .PHONY: goimports
 goimports:
-	$(info "Running goimports...")
+	$(info #Running goimports...)
 	find . -name "*.go" | grep -vE "vendor|_mock.go" | xargs -n1 goimports -w

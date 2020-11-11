@@ -9,7 +9,10 @@ import (
 	"time"
 )
 
-const WebHdfsVerDefault string = "/webhdfs/v1"
+const (
+	WebHdfsVerDefault     = "/webhdfs/v1"
+	MaxRedirectsUnlimited = -1
+)
 
 type Configuration struct {
 	Addr                  string // host:port
@@ -25,14 +28,16 @@ type Configuration struct {
 	UseBaseAuth           bool
 	UseHTTPS              bool
 	TLSClientSkipSecurity bool
+	MaxRedirects          int
 }
 
 func NewConfiguration() *Configuration {
 	return &Configuration{
-		ConnectionTimeout:     time.Second * 17,
+		ConnectionTimeout:     time.Second * 30,
 		DisableKeepAlives:     false,
 		DisableCompression:    true,
-		ResponseHeaderTimeout: time.Second * 17,
+		ResponseHeaderTimeout: time.Second * 30,
+		MaxRedirects:          10,
 	}
 }
 

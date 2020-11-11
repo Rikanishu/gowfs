@@ -70,6 +70,17 @@ func NewFileSystem(conf Configuration) (*FileSystem, error) {
 	}
 	fs.client = http.Client{
 		Transport: fs.transport,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			if fs.Config.MaxRedirects != MaxRedirectsUnlimited {
+				if len(via) >= fs.Config.MaxRedirects {
+					return fmt.Errorf("max redirects limit reached after %d attempts", len(via))
+				}
+			}
+			if fs.Config.UseBaseAuth {
+				req.SetBasicAuth(fs.Config.User, fs.Config.Password)
+			}
+			return nil
+		},
 	}
 	return fs, nil
 }
